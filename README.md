@@ -109,6 +109,28 @@ Le projet est pensé pour être montré en live, en capture d'écran ou en court
 - une capture d'un module transactionnel en action,
 - une courte vidéo de démo de 2 à 4 minutes basée sur [`docs/Demo_Script.md`](docs/Demo_Script.md).
 
+Captures actuellement disponibles :
+
+### Dashboard
+
+![Dashboard module screenshot](docs/screenshots/Dashboard.webp)
+
+### Vault
+
+![Vault module screenshot](docs/screenshots/Vault.webp)
+
+### Market
+
+![Market module screenshot](docs/screenshots/Market.webp)
+
+### Registry
+
+![Registry module screenshot](docs/screenshots/Registry.webp)
+
+### Governance
+
+![Governance module screenshot](docs/screenshots/Governance.webp)
+
 ## Ce que ce projet démontre
 
 - Intégrer une dApp full-stack web3 reliant plusieurs smart contracts à un frontend et à un wallet.
