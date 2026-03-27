@@ -5,7 +5,13 @@ import { useEffect, useState } from "react";
 import { formatEther, formatUnits, parseAbiItem } from "viem";
 import type { AbiEvent } from "viem";
 import { useChainId, usePublicClient, useReadContract } from "wagmi";
-import { abis, addresses, deployedChainId, deployedNetwork } from "@/lib/contracts";
+import {
+  abis,
+  addresses,
+  deployedChainId,
+  deployedNetwork,
+  hasCarbonCredits
+} from "@/lib/contracts";
 import { NetworkBanner } from "@/components/NetworkBanner";
 
 const LOG_CHUNK_SIZE = BigInt(50_000);
@@ -113,6 +119,7 @@ export default function HomePage() {
     depositedUsdc: BigInt(0),
     matchedEth: BigInt(0),
     retiredRecs: BigInt(0),
+    carbonCreditsMinted: BigInt(0),
     votes: 0
   });
 
@@ -170,7 +177,7 @@ export default function HomePage() {
             ? BigInt(0)
             : latestBlock - rangeMeta.blocks;
 
-        const [deposits, matched, retired, votes] = await Promise.all([
+        const [deposits, matched, retired, votes, carbonMints] = await Promise.all([
           getLogsChunked(publicClient, {
             address: addresses.vault,
             event: parseAbiItem(
@@ -202,7 +209,17 @@ export default function HomePage() {
             ) as AbiEvent,
             fromBlock,
             toBlock: latestBlock
-          })
+          }),
+          hasCarbonCredits
+            ? getLogsChunked(publicClient, {
+                address: addresses.carbonCredits,
+                event: parseAbiItem(
+                  "event CarbonCreditsMinted(address indexed to, uint256 amount)"
+                ) as AbiEvent,
+                fromBlock,
+                toBlock: latestBlock
+              })
+            : Promise.resolve([])
         ]);
 
         const depositedUsdc = deposits.reduce(
@@ -217,11 +234,16 @@ export default function HomePage() {
           (acc, log) => acc + (log.args.amount ?? BigInt(0)),
           BigInt(0)
         );
+        const carbonCreditsMinted = carbonMints.reduce(
+          (acc, log) => acc + (log.args.amount ?? BigInt(0)),
+          BigInt(0)
+        );
 
         setImpact({
           depositedUsdc,
           matchedEth,
           retiredRecs,
+          carbonCreditsMinted,
           votes: votes.length
         });
 
@@ -257,11 +279,20 @@ export default function HomePage() {
           blockNumber: log.blockNumber
         }));
 
+        const activityCarbon: ActivityItem[] = carbonMints.map((log) => ({
+          id: `${log.transactionHash}-co2`,
+          label: "Carbon credits minted",
+          value: `${(log.args.amount ?? BigInt(0)).toString()} units`,
+          txHash: log.transactionHash,
+          blockNumber: log.blockNumber
+        }));
+
         const recentActivity = [
           ...activityDeposits,
           ...activityMatched,
           ...activityRetired,
-          ...activityVotes
+          ...activityVotes,
+          ...activityCarbon
         ]
           .sort((a, b) => Number((b.blockNumber ?? BigInt(0)) - (a.blockNumber ?? BigInt(0))))
           .slice(0, 12);
@@ -472,6 +503,13 @@ export default function HomePage() {
           <h2>RECs retired</h2>
           <p>{impact.retiredRecs.toString()}</p>
         </article>
+        {hasCarbonCredits && (
+          <article className="card metric-card">
+            <h2>Carbon credits minted (events)</h2>
+            <p>{impact.carbonCreditsMinted.toString()}</p>
+            <p className="note">Demo ERC-1155 units minted in lockstep with REC issuance (same amount).</p>
+          </article>
+        )}
       </section>
 
       <section className="panel">

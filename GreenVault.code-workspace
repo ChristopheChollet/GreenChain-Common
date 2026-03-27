@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": "../GreenVault"
+		},
+		{
+			"path": "../Grid-flex-market"
+		},
+		{
+			"path": "../Green-Recs-Registry"
+		},
+		{
+			"path": "../Energy-Governance-DAO"
+		},
+		{
+			"path": "../christophe-portfolio"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Grid-flex-market",
+		"editor.inlineSuggest.enabled": false,
+		"git.ignoreLimitWarning": true
+	}
+}

@@ -8,7 +8,14 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract
 } from "wagmi";
-import { abis, addresses, deployedChain, deployedChainId } from "@/lib/contracts";
+import {
+  abis,
+  addresses,
+  CARBON_CREDIT_TOKEN_ID,
+  deployedChain,
+  deployedChainId,
+  hasCarbonCredits
+} from "@/lib/contracts";
 import { TxFeedback } from "@/components/TxFeedback";
 import { NetworkBanner } from "@/components/NetworkBanner";
 
@@ -59,6 +66,14 @@ export default function RegistryPage() {
     query: { enabled: Boolean(address) }
   });
 
+  const { data: myCarbonBalance } = useReadContract({
+    abi: abis.carbonCredits,
+    address: addresses.carbonCredits,
+    functionName: "balanceOf",
+    args: address ? [address, CARBON_CREDIT_TOKEN_ID] : undefined,
+    query: { enabled: Boolean(address) && hasCarbonCredits }
+  });
+
   async function issue(e: FormEvent) {
     e.preventDefault();
     if (isWrongNetwork || !address) return;
@@ -99,6 +114,18 @@ export default function RegistryPage() {
         <p>
           Your REC balance for token #{tokenId}: {String(myBalance ?? "-")}
         </p>
+        {hasCarbonCredits && (
+          <p>
+            Your carbon credit balance (ERC-1155 id {CARBON_CREDIT_TOKEN_ID.toString()}, minted with each
+            REC issue): {String(myCarbonBalance ?? "-")}
+          </p>
+        )}
+        {hasCarbonCredits && (
+          <p className="note">
+            Minting happens inside the same transaction as <code>issue</code> on the registry (no extra
+            wallet step). Retiring RECs does not burn carbon tokens in this MVP.
+          </p>
+        )}
       </section>
 
       <section className="panel">

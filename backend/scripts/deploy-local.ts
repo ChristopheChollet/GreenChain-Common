@@ -11,6 +11,7 @@ type DeploymentAddresses = {
     vault: string;
     oracle: string;
     market: string;
+    carbonCredits: string;
     registry: string;
     dao: string;
   };
@@ -48,10 +49,16 @@ async function main() {
   const market = await Market.deploy(await oracle.getAddress());
   await market.waitForDeployment();
 
-  // 4) RECs registry
+  // 4) Carbon credits (ERC-1155) + RECs registry (mints carbon in lockstep on issue)
+  const Carbon = await ethers.getContractFactory("CarbonCredits1155");
+  const carbon = await Carbon.deploy(deployer.address);
+  await carbon.waitForDeployment();
+
   const Registry = await ethers.getContractFactory("GreenRecsRegistry");
-  const registry = await Registry.deploy();
+  const registry = await Registry.deploy(await carbon.getAddress());
   await registry.waitForDeployment();
+
+  await (await carbon.setRegistry(await registry.getAddress())).wait();
 
   // 5) Governance DAO
   const DAO = await ethers.getContractFactory("EnergyGovernanceDAO");
@@ -67,6 +74,7 @@ async function main() {
       vault: await vault.getAddress(),
       oracle: await oracle.getAddress(),
       market: await market.getAddress(),
+      carbonCredits: await carbon.getAddress(),
       registry: await registry.getAddress(),
       dao: await dao.getAddress()
     }
@@ -108,6 +116,11 @@ async function main() {
     "utf-8"
   );
   writeFileSync(
+    join(frontendAbiDir, "CarbonCredits1155.json"),
+    Carbon.interface.formatJson(),
+    "utf-8"
+  );
+  writeFileSync(
     join(frontendAbiDir, "GreenRecsRegistry.json"),
     Registry.interface.formatJson(),
     "utf-8"
@@ -122,6 +135,7 @@ async function main() {
   console.log("✅ GreenVaultSimple:", addresses.contracts.vault);
   console.log("✅ MockGridOracle:", addresses.contracts.oracle);
   console.log("✅ GridFlexMarket:", addresses.contracts.market);
+  console.log("✅ CarbonCredits1155:", addresses.contracts.carbonCredits);
   console.log("✅ GreenRecsRegistry:", addresses.contracts.registry);
   console.log("✅ EnergyGovernanceDAO:", addresses.contracts.dao);
   console.log("📦 Backend addresses:", backendOutPath);

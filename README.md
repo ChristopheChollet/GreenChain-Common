@@ -32,7 +32,8 @@ Le projet permet de démontrer rapidement :
 
 - **Vault** : module de dépôt et de retrait qui permet à l'utilisateur de placer du capital dans le coffre du protocole.
 - **Market** : module de marché qui permet de créer et de faire correspondre des slots de flexibilité énergétique.
-- **Registry** : module de registre qui permet d'émettre et de retirer des certificats environnementaux de type REC.
+- **Registry** : module de registre qui permet d'émettre et de retirer des certificats environnementaux de type REC (contrat ERC-1155).
+- **CarbonCredits1155** : second contrat ERC-1155 (démo) qui minte des unités de « crédit carbone » en même temps qu’une émission REC (`issue`), pour le pitch climat / tokenisation. Le dashboard et la page Registry affichent les soldes et l’agrégation d’events `CarbonCreditsMinted`. Ce n’est pas un crédit carbone réglementé ; le retrait d’un REC ne brûle pas ces jetons dans cette MVP.
 - **Governance** : module de gouvernance qui permet de créer des propositions, voter et piloter certaines décisions de l'écosystème.
 
 ## Parcours unifié
@@ -103,6 +104,8 @@ npm run dev
 
 Le projet est pensé pour être montré en live, en capture d'écran ou en courte vidéo.
 
+Le **site portfolio** (Next.js, blog, page projets) est un **dépôt séparé** sur la machine : par ex. `../christophe-portfolio` à côté de ce dossier (GitHub : dépôt `portfolio-starter-kit` ou équivalent).
+
 Éléments recommandés pour le portfolio :
 
 - une capture du dashboard principal,
@@ -143,6 +146,7 @@ Captures actuellement disponibles :
 - L'environnement actuel est principalement pensé pour une exécution locale et de démonstration.
 - Certains flux reposent sur des mocks, notamment `MockUSDC` et `MockGridOracle`.
 - La logique reste volontairement MVP sur certains modules.
+- Les jetons `CarbonCredits1155` sont une démo produit : pas de marché secondaire, pas de lien kg CO₂ réel, pas de burn synchronisé avec le `retire` des REC.
 - Le projet n'intègre pas encore d'infrastructure plus avancée de type indexing backend, environnement de production ou couverture de tests plus poussée.
 
 ## Prochaines étapes

@@ -13,28 +13,36 @@ declare module "@nomicfoundation/hardhat-ethers/types" {
   getContractFactory(name: 'EnergyGovernanceDAO', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.EnergyGovernanceDAO__factory>
 getContractFactory(name: 'GridFlexMarket', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.GridFlexMarket__factory>
 getContractFactory(name: 'MockGridOracle', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.MockGridOracle__factory>
+getContractFactory(name: 'CarbonCredits1155', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.CarbonCredits1155__factory>
 getContractFactory(name: 'GreenRecsRegistry', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.GreenRecsRegistry__factory>
+getContractFactory(name: 'ICarbonCredits1155', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.ICarbonCredits1155__factory>
 getContractFactory(name: 'GreenVaultSimple', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.GreenVaultSimple__factory>
 getContractFactory(name: 'MockUSDC', signerOrOptions?: ethers.Signer | FactoryOptions): Promise<Contracts.MockUSDC__factory>
 
   getContractAt(name: 'EnergyGovernanceDAO', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.EnergyGovernanceDAO>
 getContractAt(name: 'GridFlexMarket', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.GridFlexMarket>
 getContractAt(name: 'MockGridOracle', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.MockGridOracle>
+getContractAt(name: 'CarbonCredits1155', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.CarbonCredits1155>
 getContractAt(name: 'GreenRecsRegistry', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.GreenRecsRegistry>
+getContractAt(name: 'ICarbonCredits1155', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.ICarbonCredits1155>
 getContractAt(name: 'GreenVaultSimple', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.GreenVaultSimple>
 getContractAt(name: 'MockUSDC', address: string | ethers.Addressable, signer?: ethers.Signer): Promise<Contracts.MockUSDC>
 
   deployContract(name: 'EnergyGovernanceDAO', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.EnergyGovernanceDAO>
 deployContract(name: 'GridFlexMarket', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GridFlexMarket>
 deployContract(name: 'MockGridOracle', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MockGridOracle>
+deployContract(name: 'CarbonCredits1155', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.CarbonCredits1155>
 deployContract(name: 'GreenRecsRegistry', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GreenRecsRegistry>
+deployContract(name: 'ICarbonCredits1155', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ICarbonCredits1155>
 deployContract(name: 'GreenVaultSimple', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GreenVaultSimple>
 deployContract(name: 'MockUSDC', signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MockUSDC>
 
   deployContract(name: 'EnergyGovernanceDAO', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.EnergyGovernanceDAO>
 deployContract(name: 'GridFlexMarket', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GridFlexMarket>
 deployContract(name: 'MockGridOracle', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MockGridOracle>
+deployContract(name: 'CarbonCredits1155', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.CarbonCredits1155>
 deployContract(name: 'GreenRecsRegistry', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GreenRecsRegistry>
+deployContract(name: 'ICarbonCredits1155', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.ICarbonCredits1155>
 deployContract(name: 'GreenVaultSimple', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.GreenVaultSimple>
 deployContract(name: 'MockUSDC', args: any[], signerOrOptions?: ethers.Signer | DeployContractOptions): Promise<Contracts.MockUSDC>
 

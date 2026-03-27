@@ -4,7 +4,13 @@ pragma solidity ^0.8.28;
 import { ERC1155 } from "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
+interface ICarbonCredits1155 {
+    function mintFromRecIssue(address to, uint256 amount) external;
+}
+
 contract GreenRecsRegistry is ERC1155, Ownable {
+    /// @dev If zero, no parallel carbon credits are minted (legacy / tests).
+    address public immutable carbonCredits;
     // TODO(1): declare events Issued(to,id,amount,uri) and Retired(from,id,amount,reason)
     
     event Issued(address indexed to, uint256 indexed id, uint256 amount, string uri);
@@ -12,8 +18,9 @@ contract GreenRecsRegistry is ERC1155, Ownable {
     // TODO(2): mapping tokenId => tokenURI (string)
     // mapping(uint256 => string) private _tokenUri;
     mapping(uint256 => string) private _tokenUri;
-    // TODO(3): constructor: ERC1155("") + Ownable(msg.sender)
-    constructor() ERC1155("") Ownable(msg.sender) {}
+    constructor(address _carbonCredits) ERC1155("") Ownable(msg.sender) {
+        carbonCredits = _carbonCredits;
+    }
 
     function uri(uint256 id) public view override returns (string memory) {
         string memory tokenUri = _tokenUri[id];
@@ -36,6 +43,9 @@ contract GreenRecsRegistry is ERC1155, Ownable {
         }
 
         _mint(to, id, amount, "");
+        if (carbonCredits != address(0)) {
+            ICarbonCredits1155(carbonCredits).mintFromRecIssue(to, amount);
+        }
         emit Issued(to, id, amount, _tokenUri[id]);
     }
 
