@@ -4,8 +4,8 @@ GreenChain Common est une dApp flagship web3 orientée climate/energy qui relie 
 
 ## Liens rapides
 
-- Script de démo : [`docs/Demo_Script.md`](docs/Demo_Script.md)
-- Case study freelance : [`docs/Case_Study_Freelance.md`](docs/Case_Study_Freelance.md)
+Documentation longue (guides démo, roadmap niche, open source, etc.) : voir le dossier personnel **`docs-energie-climat/greenchain-common/`** sur ta machine (même niveau que les autres projets sur le Bureau) — fichiers `Guide_Test_Application_Locale.md`, `Demo_Script.md`, `Open_Source_et_Services.md`, `Case_Study_Freelance.md`, etc. Volontairement **hors repo** pour garder ce dépôt focalisé code.
+
 - Frontend : [`frontend/`](frontend)
 - Backend : [`backend/`](backend)
 
@@ -110,7 +110,7 @@ Le **site portfolio** (Next.js, blog, page projets) est un **dépôt séparé** 
 
 - une capture du dashboard principal,
 - une capture d'un module transactionnel en action,
-- une courte vidéo de démo de 2 à 4 minutes basée sur [`docs/Demo_Script.md`](docs/Demo_Script.md).
+- une courte vidéo de démo de 2 à 4 minutes basée sur `Demo_Script.md` (dossier personnel `docs-energie-climat/greenchain-common/`).
 
 Captures actuellement disponibles :
 
